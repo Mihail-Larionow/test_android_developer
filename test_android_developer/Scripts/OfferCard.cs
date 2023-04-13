@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AndroidX.CardView.Widget;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +20,9 @@ namespace test_android_developer.Scripts
         {
             this.offer = offer;
         }
-        public Label ShowShortCard()
+        public void ShowShortCard(LinearLayout layout)
         {
-            Label label = new Label();
-            label.Text = offer.id.ToString();
-            return label;
+            
         }
 
         public void ShowFullCard()

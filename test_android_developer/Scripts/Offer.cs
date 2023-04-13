@@ -14,7 +14,7 @@ namespace test_android_developer.Scripts
     class Offer
     {
         public int id;
-        private Dictionary<String, String> attributes;
+        public Dictionary<String, String> attributes;
 
         public Offer(int id)
         {
@@ -24,7 +24,8 @@ namespace test_android_developer.Scripts
 
         public void AddAttribute(String name, String value)
         {
-            if (!attributes.TryGetValue(name, out value))
+            string val;
+            if (!attributes.TryGetValue(name, out val))
                 attributes.Add(name, value);
         }
     }

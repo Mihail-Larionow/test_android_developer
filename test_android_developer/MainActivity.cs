@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 using AndroidX.CardView.Widget;
+using System;
 using System.Collections.Generic;
 using test_android_developer.Scripts;
 
@@ -17,6 +18,8 @@ namespace test_android_developer
     {
 
         private LinearLayout layout;
+        private ViewGroup.MarginLayoutParams layoutParams;
+        private XDocument document;
         private const string URL = "https://yastatic.net/market-export/_/partner/help/YML.xml";
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -35,33 +38,44 @@ namespace test_android_developer
 
         private void Init()
         {
-            XDocument document = new XDocument();
+            document = new XDocument();
             document.LoadXml(URL);
-            CreateList(document.Parse("offer"));
-        }
-
-        private void CreateList(Dictionary<int, Offer> offers)
-        {
-            foreach (KeyValuePair<int, Offer> entry in offers)
+            layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MatchParent, 100);
+            layoutParams.SetMargins(10, 10, 10, 10);
+            foreach (KeyValuePair<int, Offer> entry in document.Parse("offer"))
             {
-                CardView cardView = new CardView(layout.Context);
-                TextView textView = new TextView(cardView.Context);
-                cardView.SetBackgroundColor(Color.Gray);
-                ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MatchParent, 100);
-                layoutParams.SetMargins(10, 10, 10, 10);
-                cardView.LayoutParameters = layoutParams;
-                textView.Text = entry.Key.ToString();
-                textView.Gravity = GravityFlags.Center;
-                cardView.AddView(textView);
-                layout.AddView(cardView);
+                ShowCard(entry.Value);
             }
         }
 
-        private void SetOnClick()
+        private void ShowCard(Offer offer)
         {
-            Intent intent = new Intent(this.ApplicationContext, typeof(OfferActivity));
-            intent.PutExtra("Offers", "offer");
-            StartActivity(typeof(OfferActivity));
+            CardView cardView = new CardView(layout.Context);
+            TextView textView = new TextView(cardView.Context);
+            cardView.SetBackgroundColor(Color.Gray);
+            cardView.LayoutParameters = layoutParams;
+            textView.Text = offer.id.ToString();
+            textView.TextSize = 20;
+            textView.Gravity = GravityFlags.Center;
+            SetOnClickListener(textView, offer);
+            cardView.AddView(textView);
+            layout.AddView(cardView);
         }
+
+        private void SetOnClickListener(TextView textView, Offer offer)
+        {
+            textView.Click += Click;
+            void Click(object sender, EventArgs e)
+            {
+                Intent intent = new Intent(this.ApplicationContext, typeof(OfferActivity));
+                intent.PutExtra("id", textView.Text);
+                foreach(KeyValuePair<string, string> attribute in offer.attributes)
+                {
+                    intent.PutExtra(attribute.Key, attribute.Value);
+                }
+                StartActivity(intent);
+            }
+        }
+
     }
 }

@@ -47,7 +47,6 @@ namespace test_android_developer.Scripts
                 foreach (XmlNode node in offerNode.ChildNodes)
                 {
                     offer.AddAttribute(node.Name, node.InnerText);
-                    Console.WriteLine(node.Name + ": " + node.InnerText);
                 }
                 Offers.Add(offer.id, offer);
             }
