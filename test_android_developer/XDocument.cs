@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace test_android_developer.Scripts
@@ -16,27 +17,23 @@ namespace test_android_developer.Scripts
     class XDocument
     {
         public XmlDocument document;
+
+        //Конструктор класса
         public XDocument()
         {
             document = new XmlDocument();
         }
 
-        public void LoadXml(String url)
+        //Асинхронный метод загрузки xml документа по ссылке
+        public async Task LoadXml(String url)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                using (HttpResponseMessage response = client.GetAsync(url).Result)
-                {
-                    using (HttpContent content = response.Content)
-                    {
-                        string result = content.ReadAsStringAsync().Result;
-                        Console.WriteLine(result);
-                        document.LoadXml(result);
-                    }
-                }
-            }
+            HttpClient client = new HttpClient();
+            String content = await client.GetStringAsync(url);
+            Console.WriteLine("content:" + content);
+            document.LoadXml(content);
         }
 
+        //Парсинг узла
         public Dictionary<int, Offer> Parse(String nameOfNode)
         {
             Dictionary<int, Offer> Offers = new Dictionary<int, Offer>();

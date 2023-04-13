@@ -16,12 +16,14 @@ namespace test_android_developer.Scripts
         public int id;
         public Dictionary<String, String> attributes;
 
+        //Конструктор класса
         public Offer(int id)
         {
             this.id = id;
             attributes = new Dictionary<String, String>();
         }
 
+        //Добавление атрибутов в словарь
         public void AddAttribute(String name, String value)
         {
             string val;

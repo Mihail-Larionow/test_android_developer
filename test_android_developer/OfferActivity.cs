@@ -25,6 +25,7 @@ namespace test_android_developer
             Init();
         }
 
+        //Инициализация
         private void Init()
         {
             layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
@@ -33,6 +34,7 @@ namespace test_android_developer
             ShowInfo(Intent.Extras);
         }
 
+        //Вывод информации на экран
         private void ShowInfo(Bundle extras)
         {
             TextView textId = FindViewById<TextView>(Resource.Id.textId);
@@ -45,11 +47,12 @@ namespace test_android_developer
             foreach (string key in extras.KeySet())
             {
                 if (!key.Equals("id"))
-                    CreateTextView(key + ": " + extras.GetString(key));
+                    AddTextView(key + ": " + extras.GetString(key));
             }
             AddButton();
         }
 
+        //Добавление кнопки на экран
         private void AddButton()
         {
             Button button = new Button(layout.Context);
@@ -65,7 +68,8 @@ namespace test_android_developer
             }
         }
 
-        private void CreateTextView(string text)
+        //Добавление TextView на экран
+        private void AddTextView(string text)
         {
             TextView textView = new TextView(layout.Context);
             textView.Text = text;

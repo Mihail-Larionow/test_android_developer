@@ -65,9 +65,8 @@
     <Compile Include="OfferActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scripts\Offer.cs" />
-    <Compile Include="Scripts\OfferCard.cs" />
-    <Compile Include="Scripts\XDocument.cs" />
+    <Compile Include="Offer.cs" />
+    <Compile Include="XDocument.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

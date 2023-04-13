@@ -9,6 +9,7 @@ using AndroidX.AppCompat.App;
 using AndroidX.CardView.Widget;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using test_android_developer.Scripts;
 
 namespace test_android_developer
@@ -36,10 +37,11 @@ namespace test_android_developer
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
+        //Инициализация
         private void Init()
         {
             document = new XDocument();
-            document.LoadXml(URL);
+            Task.Run(async () => await document.LoadXml(URL)).Wait();
             layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MatchParent, 100);
             layoutParams.SetMargins(10, 10, 10, 10);
             foreach (KeyValuePair<int, Offer> entry in document.Parse("offer"))
@@ -48,6 +50,7 @@ namespace test_android_developer
             }
         }
 
+        //Добавление карточки с Id на экран
         private void ShowCard(Offer offer)
         {
             CardView cardView = new CardView(layout.Context);
@@ -62,6 +65,7 @@ namespace test_android_developer
             layout.AddView(cardView);
         }
 
+        //Обработчик нажатия на TextView
         private void SetOnClickListener(TextView textView, Offer offer)
         {
             textView.Click += Click;
