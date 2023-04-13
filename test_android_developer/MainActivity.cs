@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
@@ -54,6 +55,13 @@ namespace test_android_developer
                 cardView.AddView(textView);
                 layout.AddView(cardView);
             }
+        }
+
+        private void SetOnClick()
+        {
+            Intent intent = new Intent(this.ApplicationContext, typeof(OfferActivity));
+            intent.PutExtra("Offers", "offer");
+            StartActivity(typeof(OfferActivity));
         }
     }
 }
